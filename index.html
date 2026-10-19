@@ -2,152 +2,286 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Почему ты особенная? ♡</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>для Анели ♡</title>
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      font-family: "Segoe UI", Arial, sans-serif;
-      color: #ffe3ed;
-      background:
-        radial-gradient(ellipse at 20% 80%, #542746 0%, transparent 42%),
-        radial-gradient(ellipse at 80% 20%, #30234d 0%, transparent 40%),
-        linear-gradient(145deg, #090d1b, #171329 55%, #351b36);
+      background: #0c0d19;
+      color: #f7e8ef;
+      font-family: Arial, "Segoe UI", sans-serif;
+      overflow-x: hidden;
     }
-    .stars, .hearts {
-      position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+
+    /* Фиксированный контейнер для анимации сердечек при скролле */
+    #hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 99;
     }
-    .star {
-      position: absolute; width: 2px; height: 2px; border-radius: 50%;
-      background: #ffd6e5; opacity: .7;
-      animation: twinkle 3s ease-in-out infinite alternate;
-    }
-    @keyframes twinkle { from {opacity:.2; transform:scale(.7)} to {opacity:1; transform:scale(1.5)} }
-    .card {
-      width: min(92vw, 620px);
+
+    section {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 42px 26px;
+      padding: 70px 24px;
+      position: relative;
+    }
+
+    /* Фоны для секций */
+    .hero {
+      background: radial-gradient(ellipse at 50% 85%, #63314e 0%, transparent 48%), linear-gradient(150deg, #090d1b, #21152e);
+    }
+
+    .story {
+      background: linear-gradient(160deg, #21152e, #351b36 60%, #171329);
+    }
+
+    .last {
+      background: radial-gradient(ellipse at 50% 30%, #56304d, transparent 60%), #0b0d1b;
+    }
+
+    .content {
+      max-width: 680px;
       position: relative;
       z-index: 1;
-      border: 1px solid rgba(255, 190, 220, .18);
-      border-radius: 28px;
-      background: rgba(15, 13, 29, .48);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 25px 80px rgba(0,0,0,.25);
     }
-    .tiny { color: #f6a8c5; letter-spacing: 3px; font-size: 13px; text-transform: uppercase; }
-    h1 {
+
+    .small {
+      color: #eaa4c0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    h1, h2 {
       font-family: Georgia, serif;
       font-weight: 400;
-      font-size: clamp(36px, 8vw, 62px);
-      line-height: 1.1;
-      margin: 18px 0;
       color: #ffb7d0;
+      line-height: 1.15;
     }
-    .intro { color: #e7cbd8; font-size: 17px; line-height: 1.7; margin: 0 auto 28px; max-width: 440px; }
-    button {
-      border: 0; border-radius: 999px; padding: 16px 30px;
-      font-size: 16px; font-weight: 600; cursor: pointer;
-      color: #32172a; background: linear-gradient(135deg, #ffc4d8, #f58eb4);
-      box-shadow: 0 8px 30px rgba(245, 142, 180, .2);
-      transition: transform .2s, box-shadow .2s;
+
+    h1 {
+      font-size: clamp(42px, 10vw, 76px);
+      margin: 20px 0;
     }
-    button:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(245, 142, 180, .35); }
-    button:active { transform: scale(.98); }
-    #reason {
-      min-height: 86px; display: grid; place-items: center;
-      margin: 26px auto 0; max-width: 470px;
-      font-family: Georgia, serif; font-size: clamp(20px, 4vw, 27px);
-      line-height: 1.5; color: #fff0f5;
-      opacity: 0; transform: translateY(8px);
-      transition: opacity .35s, transform .35s;
+
+    h2 {
+      font-size: clamp(32px, 7vw, 52px);
+      margin: 0 0 24px;
     }
-    #reason.show { opacity: 1; transform: translateY(0); }
-    .footer { margin-top: 26px; color: #cda7bd; font-size: 14px; }
+
+    p {
+      font-size: clamp(18px, 4vw, 21px);
+      line-height: 1.85;
+      color: #f0dce5;
+      margin: 0 0 18px;
+    }
+
+    .link {
+      display: inline-block;
+      margin-top: 28px;
+      color: #ffc3d8;
+      text-decoration: none;
+      border: 1px solid #b86b91;
+      border-radius: 999px;
+      padding: 13px 23px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .link:hover {
+      background: rgba(255, 195, 216, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .box {
+      margin: 0 auto;
+      max-width: 590px;
+      padding: 30px 26px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 195, 216, 0.17);
+    }
+
+    .heart-icon {
+      font-size: 32px;
+      color: #ffb7d0;
+      margin-bottom: 16px;
+    }
+
+    .endnote {
+      font-size: 15px;
+      color: #cda7bd;
+      margin-top: 28px;
+    }
+
+    /* Анимация падающих/всплывающих сердечек */
     .floating-heart {
-      position: absolute; bottom: -40px; color: #ff9fbe;
-      animation: floatUp 6s linear forwards; opacity: .8;
+      position: absolute;
+      color: #ffb7d0;
+      user-select: none;
+      pointer-events: none;
+      animation: floatUp 3.5s ease-out forwards;
+      opacity: 0.8;
     }
+
     @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0); opacity: 0; }
-      15% { opacity: .8; }
-      100% { transform: translateY(-110vh) rotate(25deg); opacity: 0; }
+      0% {
+        transform: translateY(0) scale(0.6) rotate(0deg);
+        opacity: 0.9;
+      }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-80vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="stars" id="stars"></div>
-  <div class="hearts" id="hearts"></div>
 
-  <main class="card">
-    <div class="tiny">маленький сайт для тебя ♡</div>
-    <h1>Почему ты<br>особенная?</h1>
-    <p class="intro">Я хотел напомнить тебе кое-что хорошее.<br>
-      Нажми на кнопку — и узнаешь одну из причин.</p>
+  <!-- Поверхностный слой для вылетающих сердечек -->
+  <div id="hearts-container"></div>
 
-    <button id="next">♡ Нажми сюда</button>
-    <div id="reason" aria-live="polite"></div>
-    <div class="footer">спасибо, что ты есть в моей жизни ♡</div>
-  </main>
+  <!-- Первичный экран -->
+  <section class="hero" id="top">
+    <div class="content">
+      <div class="small">я кое-что для тебя сделал ♡</div>
+      <h1>Анеля,<br>это тебе</h1>
+      <p>Я не особо умею красиво начинать такие вещи, поэтому просто скажу: мне захотелось сделать для тебя что-то своё.</p>
+      <p>Листай дальше. Тут ничего сложного, просто несколько мыслей, которые я давно хотел тебе сказать.</p>
+      <a class="link" href="#one">ну что, дальше? ↓</a>
+    </div>
+  </section>
 
+  <!-- Секция 1 -->
+  <section class="story" id="one">
+    <div class="content">
+      <div class="heart-icon">♡</div>
+      <h2>С чего вообще начать</h2>
+      <p>Наверное, с того, что я очень рад, что мы познакомились. Иногда думаю, как странно всё складывается: встречаешь человека, сначала просто общаешься, а потом он становится одним из тех, кому хочется написать даже какую-нибудь ерунду.</p>
+      <p>У меня с тобой примерно так. Могу увидеть что-то смешное и сразу подумать, что надо тебе отправить. Или услышать какую-нибудь песню и захотеть поделиться. Вроде мелочь, но для меня это многое значит.</p>
+      <a class="link" href="#two">листай ↓</a>
+    </div>
+  </section>
+
+  <!-- Секция 2 (Карточка) -->
+  <section class="story" id="two">
+    <div class="content box">
+      <div class="heart-icon">✧</div>
+      <h2>Мне нравится, какая ты</h2>
+      <p>Мне нравится, что с тобой не обязательно всё время придумывать, о чём говорить. Иногда можем обсуждать что-то важное, а иногда нести полную чушь — и мне всё равно хорошо.</p>
+      <p>Нравится, когда ты рассказываешь, как прошёл твой день. Даже если там ничего особенного не случилось. Я правда хочу это слушать, а не просто отвечать «понятно» и идти дальше.</p>
+      <p>И ещё мне нравится твой характер. Да, иногда ты можешь быть упрямой или вредничать, но это тоже часть тебя. Я не хочу, чтобы ты думала, будто должна постоянно быть идеальной или в хорошем настроении рядом со мной.</p>
+      <a class="link" href="#three">ещё немного ↓</a>
+    </div>
+  </section>
+
+  <!-- Секция 3 -->
+  <section class="story" id="three">
+    <div class="content">
+      <div class="heart-icon">♡</div>
+      <h2>Ты стала важной</h2>
+      <p>Я не знаю, в какой именно момент ты стала для меня настолько близким человеком. Кажется, это произошло постепенно. Просто в какой-то момент я понял, что мне важно, как ты себя чувствуешь, что у тебя происходит и всё ли у тебя нормально.</p>
+      <p>Если у тебя плохой день, мне хочется хотя бы немного его облегчить. Не обязательно решать все проблемы или говорить какие-то умные вещи. Иногда я могу просто посидеть с тобой, выслушать или отвлечь тебя чем-нибудь.</p>
+      <p>И если вдруг я не сразу понимаю, что тебе нужно, можешь сказать мне прямо. Я не всегда угадываю, но мне хочется научиться лучше тебя понимать.</p>
+      <a class="link" href="#four">дальше ↓</a>
+    </div>
+  </section>
+
+  <!-- Секция 4 (Карточка) -->
+  <section class="story" id="four">
+    <div class="content box">
+      <div class="heart-icon">✧</div>
+      <h2>Есть вещи, которые я запоминаю</h2>
+      <p>Я запоминаю наши разговоры. Какие-то фразы, над которыми мы смеялись, моменты, когда ты рассказывала что-то с таким увлечением, что я сам начинал улыбаться.</p>
+      <p>Наверняка для тебя часть из этого обычные мелочи. Но мне они почему-то остаются в голове. И я рад, что у нас есть такие моменты.</p>
+      <p><em>[Здесь можешь добавить ваше настоящее воспоминание: например, смешной случай, вашу прогулку или разговор, который ты до сих пор помнишь.]</em></p>
+      <a class="link" href="#five">почти конец ↓</a>
+    </div>
+  </section>
+
+  <!-- Секция 5 -->
+  <section class="story" id="five">
+    <div class="content">
+      <div class="heart-icon">♡</div>
+      <h2>И я хочу, чтобы ты знала</h2>
+      <p>Ты не обязана отвечать на это каким-то особенным образом. Я не делал сайт, чтобы поставить тебя в неловкое положение или заставить что-то сказать в ответ.</p>
+      <p>Мне просто хотелось, чтобы у тебя осталось что-то, к чему можно вернуться, если вдруг будет грустно или захочется улыбнуться. Чтобы ты помнила: есть парень, которому ты правда дорога и который очень ценит тебя.</p>
+      <p>Я не обещаю быть идеальным. Могу иногда тупить, не те слова подобрать или не сразу понять, что ты имеешь в виду. Но я постараюсь быть рядом честно, по-настоящему, а не только когда всё весело и легко.</p>
+      <a class="link" href="#final">последняя страница ↓</a>
+    </div>
+  </section>
+
+  <!-- Завершающая секция -->
+  <section class="last" id="final">
+    <div class="content">
+      <div class="heart-icon">♥</div>
+      <h2>Ну вот и всё</h2>
+      <p>В общем, Анеля, спасибо тебе за то, что ты есть в моей жизни. За наши разговоры, за смех, за всякие маленькие моменты, которые, может быть, ты даже не замечаешь.</p>
+      <p>Ты для меня очень особенный человек. Я рад, что могу назвать тебя своей лучшей подругой. И, если честно, иногда мне кажется, что слов «лучшая подруга» даже немного мало, чтобы объяснить, насколько ты мне дорога.</p>
+      <p>Береги себя, ладно?<br>И не забывай, что ты мне очень важна. ♡</p>
+      <div class="endnote">от парня, которому ты небезразлична</div>
+      <a class="link" href="#top">начать сначала ↑</a>
+    </div>
+  </section>
+
+  <!-- Скрипт создания сердечек при скролле -->
   <script>
-    // Можешь заменить эти фразы на ваши личные воспоминания
-    const reasons = [
-      "С тобой даже обычный день становится лучше.",
-      "Ты умеешь поднять мне настроение, даже когда всё не очень.",
-      "Мне нравится, что с тобой можно быть самим собой.",
-      "Ты невероятно милая, даже когда сама этого не замечаешь.",
-      "Я ценю наши разговоры — и серьёзные, и совершенно глупые.",
-      "Ты один из тех людей, с которыми хочется делиться хорошими новостями.",
-      "Мне повезло, что ты есть в моей жизни.",
-      "Ты особенная для меня. Просто хотела, чтобы ты это знала. ♡"
-    ];
+    const container = document.getElementById('hearts-container');
+    const icons = ['♡', '✧', '♥', '🌸', '✨'];
+    let lastScrollPos = window.scrollY;
 
-    let remaining = [...reasons];
-    const button = document.getElementById("next");
-    const reason = document.getElementById("reason");
-
-    button.addEventListener("click", () => {
-      if (remaining.length === 0) remaining = [...reasons];
-      const index = Math.floor(Math.random() * remaining.length);
-      const message = remaining.splice(index, 1)[0];
-
-      reason.classList.remove("show");
-      setTimeout(() => {
-        reason.textContent = message;
-        reason.classList.add("show");
-      }, 120);
-
-      button.textContent = remaining.length ? "♡ Ещё одну причину" : "♡ Начать сначала";
-      for (let i = 0; i < 5; i++) makeHeart();
+    window.addEventListener('scroll', () => {
+      const currentScrollPos = window.scrollY;
+      
+      // Вызываем появление сердечка, когда прокрутка меняется на 25px и больше
+      if (Math.abs(currentScrollPos - lastScrollPos) > 25) {
+        spawnScrollHeart();
+        lastScrollPos = currentScrollPos;
+      }
     });
 
-    // Звёздочки на фоне
-    const stars = document.getElementById("stars");
-    for (let i = 0; i < 65; i++) {
-      const star = document.createElement("span");
-      star.className = "star";
-      star.style.left = Math.random() * 100 + "%";
-      star.style.top = Math.random() * 100 + "%";
-      star.style.animationDelay = Math.random() * 3 + "s";
-      stars.appendChild(star);
-    }
+    function spawnScrollHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      
+      // Берем случайную иконку из массива
+      heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+      
+      // Позиция: случайная ширина + низ текущей области экрана
+      heart.style.left = (Math.random() * 90 + 5) + 'vw';
+      heart.style.top = (window.innerHeight - 30) + 'px';
+      
+      // Размеры и длительность анимации
+      heart.style.fontSize = (Math.random() * 16 + 18) + 'px';
+      heart.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
 
-    function makeHeart() {
-      const heart = document.createElement("span");
-      heart.className = "floating-heart";
-      heart.textContent = Math.random() > .5 ? "♡" : "♥";
-      heart.style.left = Math.random() * 100 + "%";
-      heart.style.fontSize = (16 + Math.random() * 22) + "px";
-      heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-      document.getElementById("hearts").appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
+      container.appendChild(heart);
+
+      // Удаляем из DOM после завершения анимации
+      setTimeout(() => {
+        heart.remove();
+      }, 4000);
     }
   </script>
+
 </body>
 </html>
