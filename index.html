@@ -21,6 +21,46 @@
       overflow-x: hidden;
     }
 
+    /* Стартовый заблюренный экран */
+    #start-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(12, 13, 25, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 1000;
+      cursor: pointer;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      padding: 20px;
+    }
+
+    #start-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .start-text {
+      font-family: Georgia, serif;
+      font-size: clamp(22px, 5vw, 32px);
+      color: #ffb7d0;
+      letter-spacing: 1px;
+      animation: pulseText 2s infinite ease-in-out;
+      user-select: none;
+    }
+
+    @keyframes pulseText {
+      0%, 100% { opacity: 0.6; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
     #hearts-container {
       position: fixed;
       top: 0;
@@ -65,7 +105,7 @@
     .music-info {
       font-size: 12px;
       color: #eaa4c0;
-      max-width: 120px;
+      max-width: 140px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -294,10 +334,15 @@
 </head>
 <body>
 
+  <!-- Заблюренный экран при входе -->
+  <div id="start-overlay" onclick="startSite()">
+    <div class="start-text">нажми на экран для начала ♡</div>
+  </div>
+
   <!-- Музыкальный плеер в углу -->
   <div class="music-widget">
     <button class="music-btn" id="playPauseBtn" onclick="togglePlay()" title="Включить / Выключить">▶</button>
-    <div class="music-info" id="trackInfo">Музыка ♡</div>
+    <div class="music-info" id="trackInfo">The Neighbourhood - Nervous</div>
     <button class="music-btn" id="nextBtn" onclick="nextTrack()" title="Следующий трек">⏭</button>
   </div>
 
@@ -444,18 +489,34 @@
 
   <!-- Скрипты -->
   <script>
-    // --- ПЛЕЕР И МУЗЫКА ---
+    // --- ПЛЕЕР И ПЛЕЙЛИСТ ---
     const playlist = [
-      { name: "Трек 1 ♡", src: "song1.mp3" },
-      { name: "Трек 2 ♡", src: "song2.mp3" },
-      { name: "Трек 3 ♡", src: "song3.mp3" }
+      { name: "The Neighbourhood - Nervous", src: "The Neighbourhood - Nervous.mp3" },
+      { name: "The La's - There She Goes", src: "The La s - There She Goes.mp3" },
+      { name: "Chase Atlantic - Friends", src: "Chase Atlantic - Friends.mp3" }
     ];
 
     let currentTrackIndex = 0;
     const audio = new Audio(playlist[currentTrackIndex].src);
-    audio.loop = false; // Треки идут друг за другом
+    audio.loop = false;
 
-    // Автопереключение на следующий трек, когда текущий закончился
+    // Снятие блюра и старт музыки
+    function startSite() {
+      const overlay = document.getElementById('start-overlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+      }
+
+      // Запускаем воспроизведение
+      audio.play().then(() => {
+        document.getElementById('playPauseBtn').textContent = "⏸";
+        updateTrackInfo();
+      }).catch(err => {
+        console.log("Ошибка воспроизведения:", err);
+      });
+    }
+
+    // Автопереключение на следующий трек
     audio.addEventListener('ended', function() {
       currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
       audio.src = playlist[currentTrackIndex].src;
