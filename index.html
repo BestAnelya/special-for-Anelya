@@ -57,6 +57,7 @@
       max-width: 680px;
       position: relative;
       z-index: 1;
+      width: 100%;
     }
 
     .small {
@@ -75,8 +76,8 @@
     }
 
     h1 {
-      font-size: clamp(38px, 9vw, 68px);
-      margin: 20px 0;
+      font-size: clamp(34px, 8vw, 60px);
+      margin: 15px 0;
     }
 
     h2 {
@@ -85,10 +86,10 @@
     }
 
     p {
-      font-size: clamp(18px, 4vw, 21px);
-      line-height: 1.85;
+      font-size: clamp(17px, 3.5vw, 20px);
+      line-height: 1.8;
       color: #f0dce5;
-      margin: 0 0 18px;
+      margin: 0 0 16px;
     }
 
     .link {
@@ -98,7 +99,7 @@
       text-decoration: none;
       border: 1px solid #b86b91;
       border-radius: 999px;
-      padding: 13px 23px;
+      padding: 13px 25px;
       transition: background 0.3s, transform 0.2s;
     }
 
@@ -128,56 +129,52 @@
       margin-top: 28px;
     }
 
-    /* Квест */
+    /* Надежные кнопки квеста */
     .quest-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      gap: 12px;
       max-width: 440px;
-      margin: 25px auto;
+      margin: 20px auto;
     }
 
     .quest-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 195, 216, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 195, 216, 0.3);
       border-radius: 16px;
-      padding: 8px;
+      padding: 20px 10px;
       cursor: pointer;
-      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+      font-size: 16px;
+      color: #ffb7d0;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
 
     .quest-card:hover {
       transform: scale(1.03);
       border-color: #ffb7d0;
-      background: rgba(255, 195, 216, 0.1);
-    }
-
-    .quest-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 12px;
-      display: block;
-      background: #1d1527;
+      background: rgba(255, 195, 216, 0.15);
+      color: #fff;
     }
 
     .quest-result {
-      margin-top: 20px;
+      margin-top: 15px;
       display: none;
+      animation: fadeIn 0.5s ease;
     }
 
     .quest-result.show {
       display: block;
     }
 
-    /* Карточка-Факт */
+    /* Блок-Факт с таймером (теперь на виду) */
     .fact-card {
       background: linear-gradient(135deg, rgba(255, 183, 208, 0.12) 0%, rgba(99, 49, 78, 0.3) 100%);
       border: 1.5px solid #ffb7d0;
       box-shadow: 0 10px 30px rgba(255, 183, 208, 0.2);
       border-radius: 24px;
-      padding: 25px 20px;
-      margin: 20px auto;
+      padding: 22px 18px;
+      margin: 25px auto 10px;
       max-width: 550px;
     }
 
@@ -185,41 +182,46 @@
       display: inline-block;
       background: rgba(255, 183, 208, 0.2);
       color: #ffc3d8;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: bold;
       letter-spacing: 1.5px;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 50px;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .timer-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 15px;
+      gap: 8px;
+      margin-top: 12px;
     }
 
     .timer-box {
-      background: rgba(12, 13, 25, 0.6);
+      background: rgba(12, 13, 25, 0.7);
       border: 1px solid rgba(255, 195, 216, 0.3);
-      border-radius: 16px;
-      padding: 12px 6px;
+      border-radius: 14px;
+      padding: 10px 4px;
     }
 
     .timer-num {
-      font-size: clamp(22px, 5.5vw, 32px);
+      font-size: clamp(20px, 5vw, 28px);
       font-weight: bold;
       color: #ffffff;
       font-family: Georgia, serif;
     }
 
     .timer-txt {
-      font-size: 12px;
+      font-size: 11px;
       color: #eaa4c0;
-      margin-top: 4px;
+      margin-top: 3px;
       text-transform: lowercase;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .floating-heart {
@@ -246,66 +248,58 @@
 </head>
 <body>
 
-  <!-- Вылетающие сердечки -->
+  <!-- Сердечки при скролле -->
   <div id="hearts-container"></div>
 
-  <!-- Экран Квеста -->
+  <!-- Экран Квеста и Таймер -->
   <section class="hero" id="top">
     <div class="content">
       <div class="small">маленький тест для тебя ♡</div>
-      <h1>Выбери самую красивую фотографию</h1>
+      <h1>Выбери самую красивую</h1>
       <p>Прежде чем я покажу тебе то, что написал, выбери на свой взгляд самую лучшую из этих четырех фотографий (только чур честно!):</p>
       
-      <!-- Карточки квеста -->
+      <!-- Кнопки квеста -->
       <div class="quest-grid" id="questGrid">
-        <div class="quest-card" onclick="handleChoice()">
-          <img src="IMG_5146.JPG" alt="Фото 1">
-        </div>
-        <div class="quest-card" onclick="handleChoice()">
-          <img src="IMG_5147.JPG" alt="Фото 2">
-        </div>
-        <div class="quest-card" onclick="handleChoice()">
-          <img src="IMG_5145.PNG" alt="Фото 3">
-        </div>
-        <div class="quest-card" onclick="handleChoice()">
-          <img src="IMG_5148.JPG" alt="Фото 4">
-        </div>
+        <div class="quest-card" onclick="handleChoice()">📷 Фото №1</div>
+        <div class="quest-card" onclick="handleChoice()">📷 Фото №2</div>
+        <div class="quest-card" onclick="handleChoice()">📷 Фото №3</div>
+        <div class="quest-card" onclick="handleChoice()">📷 Фото №4</div>
       </div>
 
       <!-- Сообщение после клика -->
       <div class="quest-result" id="questResult">
-        <p style="color: #ffb7d0; font-weight: bold; margin-bottom: 8px; font-size: 20px;">Хмм... Ошибка в системе! 🤭</p>
-        <p style="font-size: 17px; margin-bottom: 20px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
+        <p style="color: #ffb7d0; font-weight: bold; margin-bottom: 6px; font-size: 19px;">Хмм... Ошибка в системе! 🤭</p>
+        <p style="font-size: 16px; margin-bottom: 10px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
+      </div>
 
-        <!-- Блок-Факт с живым таймером -->
-        <div class="fact-card">
-          <div class="fact-badge">Неоспоримый факт ✨</div>
-          <p style="font-size: 17px; margin: 0 0 10px; color: #fff;">Мы общаемся уже:</p>
+      <!-- Главный факт: Таймер (всегда на виду) -->
+      <div class="fact-card">
+        <div class="fact-badge">Неоспоримый факт ✨</div>
+        <p style="font-size: 16px; margin: 0 0 8px; color: #fff;">Мы общаемся уже:</p>
 
-          <div class="timer-grid">
-            <div class="timer-box">
-              <div class="timer-num" id="days">0</div>
-              <div class="timer-txt">дней</div>
-            </div>
-            <div class="timer-box">
-              <div class="timer-num" id="hours">0</div>
-              <div class="timer-txt">часов</div>
-            </div>
-            <div class="timer-box">
-              <div class="timer-num" id="minutes">0</div>
-              <div class="timer-txt">минут</div>
-            </div>
-            <div class="timer-box">
-              <div class="timer-num" id="seconds">0</div>
-              <div class="timer-txt">секунд</div>
-            </div>
+        <div class="timer-grid">
+          <div class="timer-box">
+            <div class="timer-num" id="days">0</div>
+            <div class="timer-txt">дней</div>
           </div>
-
-          <p style="font-size: 14px; color: #eaa4c0; margin: 12px 0 0;">(начиная с 10 декабря 2024 года)</p>
+          <div class="timer-box">
+            <div class="timer-num" id="hours">0</div>
+            <div class="timer-txt">часов</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="minutes">0</div>
+            <div class="timer-txt">минут</div>
+          </div>
+          <div class="timer-box">
+            <div class="timer-num" id="seconds">0</div>
+            <div class="timer-txt">секунд</div>
+          </div>
         </div>
 
-        <a class="link" href="#one">ну что, пойдём дальше? ↓</a>
+        <p style="font-size: 13px; color: #eaa4c0; margin: 10px 0 0;">(начиная с 10 декабря 2024 года)</p>
       </div>
+
+      <a class="link" href="#one">ну что, пойдём дальше? ↓</a>
     </div>
   </section>
 
@@ -352,7 +346,7 @@
       <p>Я запоминаю наши разговоры. Какие-то фразы, над которыми мы смеялись, моменты, когда ты рассказывала что-то с таким увлечением, что я сам начинал улыбаться.</p>
       <p>Наверняка для тебя часть из этого обычные мелочи. Но мне они почему-то остаются в голове. И я рад, что у нас есть такие моменты.</p>
       
-      <!-- Картинка -->
+      <!-- Картинка воспоминания -->
       <div style="text-align: center; margin: 20px 0;">
         <img src="IMG_0997.jpeg" alt="Наше воспоминание" style="max-width: 280px; width: 100%; height: auto; border-radius: 16px; border: 1px solid rgba(255, 195, 216, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
       </div>
@@ -389,7 +383,7 @@
 
   <!-- Скрипты -->
   <script>
-    // Функция показа результата при клике на картинку
+    // Квест при клике на любую кнопку
     function handleChoice() {
       var grid = document.getElementById('questGrid');
       var result = document.getElementById('questResult');
@@ -402,7 +396,7 @@
       }
     }
 
-    // Логика таймера (от 10 декабря 2024 года)
+    // Таймер дружбы (от 10 декабря 2024 года)
     var startDate = new Date('2024-12-10T00:00:00');
 
     function updateTimer() {
