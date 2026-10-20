@@ -21,6 +21,7 @@
       overflow-x: hidden;
     }
 
+    /* Стартовый заблюренный экран */
     #start-overlay {
       position: fixed;
       top: 0;
@@ -309,6 +310,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Обычные вылетающие сердечки при скролле */
     .floating-heart {
       position: absolute;
       color: #ffb7d0;
@@ -329,6 +331,28 @@
         opacity: 0;
       }
     }
+
+    /* Анимация праздничного салюта в конце */
+    .firework-particle {
+      position: absolute;
+      user-select: none;
+      pointer-events: none;
+      animation: fireworkFly 2.2s ease-out forwards;
+    }
+
+    @keyframes fireworkFly {
+      0% {
+        transform: translate(0, 0) scale(0.4) rotate(0deg);
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(1.3) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -345,7 +369,7 @@
     <button class="music-btn" id="nextBtn" onclick="nextTrack()" title="Следующий трек">⏭</button>
   </div>
 
-  <!-- Сердечки при скролле -->
+  <!-- Сердечки при скролле и салют -->
   <div id="hearts-container"></div>
 
   <!-- Экран Квеста с фотками и Таймером -->
@@ -506,7 +530,6 @@
         overlay.classList.add('hidden');
       }
 
-      // Запускаем воспроизведение
       audio.play().then(() => {
         document.getElementById('playPauseBtn').textContent = "⏸";
         updateTrackInfo();
@@ -599,7 +622,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Сердечки при скролле
+    // --- СЕРДЕЧКИ ПРИ СКРОЛЛЕ ---
     var container = document.getElementById('hearts-container');
     var icons = ['♡', '✧', '♥', '🌸', '✨'];
     var lastScrollPos = window.scrollY;
@@ -628,6 +651,57 @@
       setTimeout(function() {
         heart.remove();
       }, 4000);
+    }
+
+    // --- ПРАЗДНИЧНЫЙ САЛЮТ В ФИНАЛЕ ---
+    let fireworkTriggered = false;
+    const finalSection = document.getElementById('final');
+    const fireworkIcons = ['♥', '♡', '✨', '🌸', '💖', '✧'];
+
+    function launchFireworks() {
+      for (let burst = 0; burst < 3; burst++) {
+        setTimeout(() => {
+          const centerX = Math.random() * (window.innerWidth * 0.6) + (window.innerWidth * 0.2);
+          const centerY = Math.random() * (window.innerHeight * 0.5) + (window.innerHeight * 0.25);
+
+          for (let i = 0; i < 24; i++) {
+            const p = document.createElement('div');
+            p.classList.add('firework-particle');
+            p.innerHTML = fireworkIcons[Math.floor(Math.random() * fireworkIcons.length)];
+
+            p.style.left = centerX + 'px';
+            p.style.top = centerY + 'px';
+            p.style.fontSize = (Math.random() * 14 + 18) + 'px';
+            p.style.color = '#ffb7d0';
+
+            const angle = (i / 24) * 2 * Math.PI;
+            const distance = Math.random() * 140 + 80;
+            const tx = Math.cos(angle) * distance + 'px';
+            const ty = Math.sin(angle) * distance + 'px';
+
+            p.style.setProperty('--tx', tx);
+            p.style.setProperty('--ty', ty);
+
+            container.appendChild(p);
+
+            setTimeout(() => { p.remove(); }, 2200);
+          }
+        }, burst * 600);
+      }
+    }
+
+    // Отслеживаем прокрутку до конца страницы
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !fireworkTriggered) {
+          fireworkTriggered = true;
+          launchFireworks();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    if (finalSection) {
+      observer.observe(finalSection);
     }
   </script>
 
