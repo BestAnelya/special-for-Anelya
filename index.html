@@ -21,7 +21,7 @@
       overflow-x: hidden;
     }
 
-    /* Фиксированный контейнер для анимации сердечек при скролле */
+    /* Анимация сердечек при скролле */
     #hearts-container {
       position: fixed;
       top: 0;
@@ -95,7 +95,7 @@
 
     .link {
       display: inline-block;
-      margin-top: 28px;
+      margin-top: 24px;
       color: #ffc3d8;
       text-decoration: none;
       border: 1px solid #b86b91;
@@ -130,7 +130,7 @@
       margin-top: 28px;
     }
 
-    /* Стили для мини-квеста с фото */
+    /* Квест */
     .quest-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -162,13 +162,8 @@
       display: block;
     }
 
-    /* Блок сообщения после выбора */
     .quest-result {
       margin-top: 20px;
-      padding: 20px;
-      border-radius: 16px;
-      background: rgba(255, 183, 208, 0.08);
-      border: 1px solid rgba(255, 183, 208, 0.3);
       display: none;
       animation: fadeIn 0.6s ease;
     }
@@ -177,12 +172,91 @@
       display: block;
     }
 
+    /* КРАСИВЫЙ БЛОК-ФАКТ С ТАЙМЕРОМ */
+    .fact-card {
+      background: linear-gradient(135deg, rgba(255, 183, 208, 0.12) 0%, rgba(99, 49, 78, 0.3) 100%);
+      border: 1.5px solid #ffb7d0;
+      box-shadow: 0 10px 30px rgba(255, 183, 208, 0.2);
+      border-radius: 24px;
+      padding: 25px 20px;
+      margin: 20px auto;
+      max-width: 550px;
+    }
+
+    .fact-badge {
+      display: inline-block;
+      background: rgba(255, 183, 208, 0.2);
+      color: #ffc3d8;
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      padding: 6px 14px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .timer-box {
+      background: rgba(12, 13, 25, 0.6);
+      border: 1px solid rgba(255, 195, 216, 0.3);
+      border-radius: 16px;
+      padding: 12px 6px;
+      backdrop-filter: blur(5px);
+    }
+
+    .timer-num {
+      font-size: clamp(22px, 5.5vw, 32px);
+      font-weight: bold;
+      color: #ffffff;
+      font-family: Georgia, serif;
+      text-shadow: 0 0 10px rgba(255, 183, 208, 0.5);
+    }
+
+    .timer-txt {
+      font-size: 12px;
+      color: #eaa4c0;
+      margin-top: 4px;
+      text-transform: lowercase;
+    }
+
+    /* Плавающий виджет внизу экрана */
+    .floating-timer {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(21, 15, 35, 0.85);
+      border: 1px solid rgba(255, 183, 208, 0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #ffc3d8;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .floating-timer.visible {
+      opacity: 1;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Анимация всплывающих сердечек */
     .floating-heart {
       position: absolute;
       color: #ffb7d0;
@@ -197,9 +271,7 @@
         transform: translateY(0) scale(0.6) rotate(0deg);
         opacity: 0.9;
       }
-      50% {
-        opacity: 0.7;
-      }
+      50% { opacity: 0.7; }
       100% {
         transform: translateY(-80vh) scale(1.2) rotate(360deg);
         opacity: 0;
@@ -209,17 +281,26 @@
 </head>
 <body>
 
-  <!-- Поверхностный слой для вылетающих сердечек -->
+  <!-- Вылетающие сердечки -->
   <div id="hearts-container"></div>
 
-  <!-- Первичный экран: Мини-квест с выбором фотографии -->
+  <!-- Закрепленный виджет в углу экрана -->
+  <div class="floating-timer" id="floatingTimer">
+    <span>⏳ Дружим:</span>
+    <strong id="miniDays" style="color:#fff;">0</strong>д
+    <strong id="miniHours" style="color:#fff;">0</strong>ч
+    <strong id="miniMins" style="color:#fff;">0</strong>м
+    <strong id="miniSecs" style="color:#fff;">0</strong>с
+  </div>
+
+  <!-- Первичный экран: Квест -->
   <section class="hero" id="top">
     <div class="content">
       <div class="small">маленький тест для тебя ♡</div>
       <h1>Выбери самую красивую фотографию</h1>
       <p>Прежде чем я покажу тебе то, что написал, выбери на свой взгляд самую лучшую из этих четырех фотографий (только чур честно!):</p>
       
-      <!-- Сетка с 4 фотографиями (поменяйте названия фото на свои, если они другие) -->
+      <!-- Карточки квеста -->
       <div class="quest-grid" id="questGrid">
         <div class="quest-card" onclick="handleChoice()">
           <img src="IMG_5146.JPG" alt="Фото 1">
@@ -235,11 +316,39 @@
         </div>
       </div>
 
-      <!-- Сообщение после клика на любуб фото -->
+      <!-- Сообщение + КРАСИВЫЙ БЛОК-ФАКТ -->
       <div class="quest-result" id="questResult">
-        <p style="color: #ffb7d0; font-weight: bold; margin-bottom: 10px;">Хмм... Ошибка в системе! 🤭</p>
-        <p style="font-size: 17px; margin-bottom: 15px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
-        <a class="link" href="#one" style="margin-top: 5px;">ну что, пойдём дальше? ↓</a>
+        <p style="color: #ffb7d0; font-weight: bold; margin-bottom: 8px; font-size: 20px;">Хмм... Ошибка в системе! 🤭</p>
+        <p style="font-size: 17px; margin-bottom: 20px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
+
+        <!-- Карточка-Факт с живым таймером -->
+        <div class="fact-card">
+          <div class="fact-badge">Неоспоримый факт ✨</div>
+          <p style="font-size: 17px; margin: 0 0 10px; color: #fff;">Мы непрерывно общаемся уже:</p>
+
+          <div class="timer-grid">
+            <div class="timer-box">
+              <div class="timer-num" id="days">0</div>
+              <div class="timer-txt">дней</div>
+            </div>
+            <div class="timer-box">
+              <div class="timer-num" id="hours">0</div>
+              <div class="timer-txt">часов</div>
+            </div>
+            <div class="timer-box">
+              <div class="timer-num" id="minutes">0</div>
+              <div class="timer-txt">минут</div>
+            </div>
+            <div class="timer-box">
+              <div class="timer-num" id="seconds">0</div>
+              <div class="timer-txt">секунд</div>
+            </div>
+          </div>
+
+          <p style="font-size: 14px; color: #eaa4c0; margin: 12px 0 0;">(начиная с 10 декабря 2024 года)</p>
+        </div>
+
+        <a class="link" href="#one">ну что, пойдём дальше? ↓</a>
       </div>
     </div>
   </section>
@@ -318,60 +427,4 @@
       <p>Ты для меня очень особенный человек. Я рад, что могу назвать тебя своим счастьем. И, если честно, иногда мне кажется, что слов «счастье» даже немного мало, чтобы объяснить, насколько ты мне дорога.</p>
       <p>Береги себя, ладно?<br>И не забывай, что ты мне очень важна. ♡</p>
       <div class="endnote">от парня, которому ты небезразлична</div>
-      <a class="link" href="#top">начать сначала ↑</a>
-    </div>
-  </section>
-
-  <!-- Скрипты: квест и сердечки при скролле -->
-  <script>
-    // Логика квеста при клике на любую фотку
-    function handleChoice() {
-      const grid = document.getElementById('questGrid');
-      const result = document.getElementById('questResult');
-      
-      // Прячем сетку с картинками и показываем душевное сообщение
-      grid.style.display = 'none';
-      result.classList.add('show');
-      
-      // Запускаем много сердечек для красоты
-      for (let i = 0; i < 12; i++) {
-        setTimeout(spawnScrollHeart, i * 150);
-      }
-    }
-
-    // Логика вылетающих сердечек при скролле
-    const container = document.getElementById('hearts-container');
-    const icons = ['♡', '✧', '♥', '🌸', '✨'];
-    let lastScrollPos = window.scrollY;
-
-    window.addEventListener('scroll', () => {
-      const currentScrollPos = window.scrollY;
-      
-      if (Math.abs(currentScrollPos - lastScrollPos) > 25) {
-        spawnScrollHeart();
-        lastScrollPos = currentScrollPos;
-      }
-    });
-
-    function spawnScrollHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('floating-heart');
-      
-      heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-      
-      heart.style.left = (Math.random() * 90 + 5) + 'vw';
-      heart.style.top = (window.innerHeight - 30) + 'px';
-      
-      heart.style.fontSize = (Math.random() * 16 + 18) + 'px';
-      heart.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
-
-      container.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 4000);
-    }
-  </script>
-
-</body>
-</html>
+      <a class="link" href
