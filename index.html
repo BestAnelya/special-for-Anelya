@@ -21,7 +21,6 @@
       overflow-x: hidden;
     }
 
-    /* Анимация сердечек при скролле */
     #hearts-container {
       position: fixed;
       top: 0;
@@ -42,7 +41,6 @@
       position: relative;
     }
 
-    /* Фоны для секций */
     .hero {
       background: radial-gradient(ellipse at 50% 85%, #63314e 0%, transparent 48%), linear-gradient(150deg, #090d1b, #21152e);
     }
@@ -160,19 +158,19 @@
       object-fit: cover;
       border-radius: 12px;
       display: block;
+      background: #1d1527;
     }
 
     .quest-result {
       margin-top: 20px;
       display: none;
-      animation: fadeIn 0.6s ease;
     }
 
     .quest-result.show {
       display: block;
     }
 
-    /* КРАСИВЫЙ БЛОК-ФАКТ С ТАЙМЕРОМ */
+    /* Карточка-Факт */
     .fact-card {
       background: linear-gradient(135deg, rgba(255, 183, 208, 0.12) 0%, rgba(99, 49, 78, 0.3) 100%);
       border: 1.5px solid #ffb7d0;
@@ -208,7 +206,6 @@
       border: 1px solid rgba(255, 195, 216, 0.3);
       border-radius: 16px;
       padding: 12px 6px;
-      backdrop-filter: blur(5px);
     }
 
     .timer-num {
@@ -216,7 +213,6 @@
       font-weight: bold;
       color: #ffffff;
       font-family: Georgia, serif;
-      text-shadow: 0 0 10px rgba(255, 183, 208, 0.5);
     }
 
     .timer-txt {
@@ -224,37 +220,6 @@
       color: #eaa4c0;
       margin-top: 4px;
       text-transform: lowercase;
-    }
-
-    /* Плавающий виджет внизу экрана */
-    .floating-timer {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      background: rgba(21, 15, 35, 0.85);
-      border: 1px solid rgba(255, 183, 208, 0.4);
-      backdrop-filter: blur(8px);
-      border-radius: 50px;
-      padding: 8px 16px;
-      font-size: 13px;
-      color: #ffc3d8;
-      z-index: 100;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
-
-    .floating-timer.visible {
-      opacity: 1;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .floating-heart {
@@ -284,16 +249,7 @@
   <!-- Вылетающие сердечки -->
   <div id="hearts-container"></div>
 
-  <!-- Закрепленный виджет в углу экрана -->
-  <div class="floating-timer" id="floatingTimer">
-    <span>⏳ Дружим:</span>
-    <strong id="miniDays" style="color:#fff;">0</strong>д
-    <strong id="miniHours" style="color:#fff;">0</strong>ч
-    <strong id="miniMins" style="color:#fff;">0</strong>м
-    <strong id="miniSecs" style="color:#fff;">0</strong>с
-  </div>
-
-  <!-- Первичный экран: Квест -->
+  <!-- Экран Квеста -->
   <section class="hero" id="top">
     <div class="content">
       <div class="small">маленький тест для тебя ♡</div>
@@ -316,15 +272,15 @@
         </div>
       </div>
 
-      <!-- Сообщение + КРАСИВЫЙ БЛОК-ФАКТ -->
+      <!-- Сообщение после клика -->
       <div class="quest-result" id="questResult">
         <p style="color: #ffb7d0; font-weight: bold; margin-bottom: 8px; font-size: 20px;">Хмм... Ошибка в системе! 🤭</p>
         <p style="font-size: 17px; margin-bottom: 20px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
 
-        <!-- Карточка-Факт с живым таймером -->
+        <!-- Блок-Факт с живым таймером -->
         <div class="fact-card">
           <div class="fact-badge">Неоспоримый факт ✨</div>
-          <p style="font-size: 17px; margin: 0 0 10px; color: #fff;">Мы непрерывно общаемся уже:</p>
+          <p style="font-size: 17px; margin: 0 0 10px; color: #fff;">Мы общаемся уже:</p>
 
           <div class="timer-grid">
             <div class="timer-box">
@@ -364,7 +320,7 @@
     </div>
   </section>
 
-  <!-- Секция 2 (Карточка) -->
+  <!-- Секция 2 -->
   <section class="story" id="two">
     <div class="content box">
       <div class="heart-icon">✧</div>
@@ -388,7 +344,7 @@
     </div>
   </section>
 
-  <!-- Секция 4 (Карточка с фото) -->
+  <!-- Секция 4 -->
   <section class="story" id="four">
     <div class="content box">
       <div class="heart-icon">✧</div>
@@ -418,7 +374,7 @@
     </div>
   </section>
 
-  <!-- Завершающая секция -->
+  <!-- Финал -->
   <section class="last" id="final">
     <div class="content">
       <div class="heart-icon">♥</div>
@@ -427,4 +383,84 @@
       <p>Ты для меня очень особенный человек. Я рад, что могу назвать тебя своим счастьем. И, если честно, иногда мне кажется, что слов «счастье» даже немного мало, чтобы объяснить, насколько ты мне дорога.</p>
       <p>Береги себя, ладно?<br>И не забывай, что ты мне очень важна. ♡</p>
       <div class="endnote">от парня, которому ты небезразлична</div>
-      <a class="link" href
+      <a class="link" href="#top">начать сначала ↑</a>
+    </div>
+  </section>
+
+  <!-- Скрипты -->
+  <script>
+    // Функция показа результата при клике на картинку
+    function handleChoice() {
+      var grid = document.getElementById('questGrid');
+      var result = document.getElementById('questResult');
+      
+      if (grid) grid.style.display = 'none';
+      if (result) result.classList.add('show');
+      
+      for (var i = 0; i < 10; i++) {
+        setTimeout(spawnScrollHeart, i * 150);
+      }
+    }
+
+    // Логика таймера (от 10 декабря 2024 года)
+    var startDate = new Date('2024-12-10T00:00:00');
+
+    function updateTimer() {
+      var now = new Date();
+      var diff = now - startDate;
+
+      if (diff < 0) diff = 0;
+
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      var minutes = Math.floor((diff / (1000 * 60)) % 60);
+      var seconds = Math.floor((diff / 1000) % 60);
+
+      var dEl = document.getElementById('days');
+      var hEl = document.getElementById('hours');
+      var mEl = document.getElementById('minutes');
+      var sEl = document.getElementById('seconds');
+
+      if (dEl) dEl.textContent = days;
+      if (hEl) hEl.textContent = hours;
+      if (mEl) mEl.textContent = minutes;
+      if (sEl) sEl.textContent = seconds;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Сердечки при скролле
+    var container = document.getElementById('hearts-container');
+    var icons = ['♡', '✧', '♥', '🌸', '✨'];
+    var lastScrollPos = window.scrollY;
+
+    window.addEventListener('scroll', function() {
+      var currentScrollPos = window.scrollY;
+      if (Math.abs(currentScrollPos - lastScrollPos) > 25) {
+        spawnScrollHeart();
+        lastScrollPos = currentScrollPos;
+      }
+    });
+
+    function spawnScrollHeart() {
+      if (!container) return;
+      var heart = document.createElement('div');
+      heart.classList.add('floating-heart');
+      heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+      
+      heart.style.left = (Math.random() * 90 + 5) + 'vw';
+      heart.style.top = (window.innerHeight - 30) + 'px';
+      heart.style.fontSize = (Math.random() * 16 + 18) + 'px';
+      heart.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
+
+      container.appendChild(heart);
+
+      setTimeout(function() {
+        heart.remove();
+      }, 4000);
+    }
+  </script>
+
+</body>
+</html>
