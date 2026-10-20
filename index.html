@@ -77,7 +77,7 @@
     }
 
     h1 {
-      font-size: clamp(42px, 10vw, 76px);
+      font-size: clamp(38px, 9vw, 68px);
       margin: 20px 0;
     }
 
@@ -130,7 +130,59 @@
       margin-top: 28px;
     }
 
-    /* Анимация падающих/всплывающих сердечек */
+    /* Стили для мини-квеста с фото */
+    .quest-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      max-width: 440px;
+      margin: 25px auto;
+    }
+
+    .quest-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 195, 216, 0.2);
+      border-radius: 16px;
+      padding: 8px;
+      cursor: pointer;
+      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    }
+
+    .quest-card:hover {
+      transform: scale(1.03);
+      border-color: #ffb7d0;
+      background: rgba(255, 195, 216, 0.1);
+    }
+
+    .quest-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    /* Блок сообщения после выбора */
+    .quest-result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(255, 183, 208, 0.08);
+      border: 1px solid rgba(255, 183, 208, 0.3);
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .quest-result.show {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Анимация всплывающих сердечек */
     .floating-heart {
       position: absolute;
       color: #ffb7d0;
@@ -160,14 +212,35 @@
   <!-- Поверхностный слой для вылетающих сердечек -->
   <div id="hearts-container"></div>
 
-  <!-- Первичный экран -->
+  <!-- Первичный экран: Мини-квест с выбором фотографии -->
   <section class="hero" id="top">
     <div class="content">
-      <div class="small">я кое-что для тебя сделал ♡</div>
-      <h1>Анеля,<br>это тебе</h1>
-      <p>Я не особо умею красиво начинать такие вещи, поэтому просто скажу: мне захотелось сделать для тебя что-то своё.</p>
-      <p>Листай дальше. Тут ничего сложного, просто несколько мыслей, которые я давно хотел тебе сказать.</p>
-      <a class="link" href="#one">ну что, дальше? ↓</a>
+      <div class="small">маленький тест для тебя ♡</div>
+      <h1>Выбери самую красивую</h1>
+      <p>Прежде чем я покажу тебе то, что написал, выбери на свой взгляд самую лучшую из этих четырех фотографий (только чур честно!):</p>
+      
+      <!-- Сетка с 4 фотографиями (поменяйте названия фото на свои, если они другие) -->
+      <div class="quest-grid" id="questGrid">
+        <div class="quest-card" onclick="handleChoice()">
+          <img src="IMG_0997.jpeg" alt="Фото 1">
+        </div>
+        <div class="quest-card" onclick="handleChoice()">
+          <img src="IMG_0997.jpeg" alt="Фото 2">
+        </div>
+        <div class="quest-card" onclick="handleChoice()">
+          <img src="IMG_0997.jpeg" alt="Фото 3">
+        </div>
+        <div class="quest-card" onclick="handleChoice()">
+          <img src="IMG_0997.jpeg" alt="Фото 4">
+        </div>
+      </div>
+
+      <!-- Сообщение после клика на любуб фото -->
+      <div class="quest-result" id="questResult">
+        <p style="color: #ffb7d0; font-weight: bold; margin-bottom: 10px;">Хмм... Ошибка в системе! 🤭</p>
+        <p style="font-size: 17px; margin-bottom: 15px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
+        <a class="link" href="#one" style="margin-top: 5px;">ну что, пойдём дальше? ↓</a>
+      </div>
     </div>
   </section>
 
@@ -206,25 +279,23 @@
     </div>
   </section>
 
-<!-- Секция 4 (Карточка) -->
-<section class="story" id="four">
-  <div class="content box">
-    <div class="heart-icon">✧</div>
-    <h2>Есть вещи, которые я запоминаю</h2>
-    <p>Я запоминаю наши разговоры. Какие-то фразы, над которыми мы смеялись, моменты, когда ты рассказывала что-то с таким увлечением, что я сам начинал улыбаться.</p>
-    <p>Наверняка для тебя часть из этого обычные мелочи. Но мне они почему-то остаются в голове. И я рад, что у нас есть такие моменты.</p>
-    
-    <!-- Картинка IMG_0997.jpeg -->
-    <div style="text-align: center; margin: 20px 0;">
-      <img src="IMG_0997.jpeg" alt="Наше воспоминание" style="max-width: 280px; width: 100%; height: auto; border-radius: 16px; border: 1px solid rgba(255, 195, 216, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+  <!-- Секция 4 (Карточка с фото) -->
+  <section class="story" id="four">
+    <div class="content box">
+      <div class="heart-icon">✧</div>
+      <h2>Есть вещи, которые я запоминаю</h2>
+      <p>Я запоминаю наши разговоры. Какие-то фразы, над которыми мы смеялись, моменты, когда ты рассказывала что-то с таким увлечением, что я сам начинал улыбаться.</p>
+      <p>Наверняка для тебя часть из этого обычные мелочи. Но мне они почему-то остаются в голове. И я рад, что у нас есть такие моменты.</p>
+      
+      <!-- Картинка -->
+      <div style="text-align: center; margin: 20px 0;">
+        <img src="IMG_0997.jpeg" alt="Наше воспоминание" style="max-width: 280px; width: 100%; height: auto; border-radius: 16px; border: 1px solid rgba(255, 195, 216, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+      </div>
+
+      <p><em>[Я помню нашу первую прогулку, когда мы гуляли зимой и забрели под мост, где смеялись и радовались вместе;)]</em></p>
+      <a class="link" href="#five">почти конец ↓</a>
     </div>
-
-    <p><em>[Я помню нашу первую прогулку, когда мы гуляли зимой и забрели под мост, где смеялись и радовались вместе;)]</em></p>
-    <a class="link" href="#five">почти конец ↓</a>
-  </div>
-</section>
-
-
+  </section>
 
   <!-- Секция 5 -->
   <section class="story" id="five">
@@ -243,16 +314,32 @@
     <div class="content">
       <div class="heart-icon">♥</div>
       <h2>Ну вот и всё</h2>
-      <p>В общем, Анеля, спасибо тебе за то, что ты есть в моей жизни. За наши разговоры, за смех, за всякие маленькие моменты, которые, может быть, ты даже не замечаешь.</p>
-      <p>Ты для меня очень особенный человек. Я рад, что могу назвать тебя своим счастьем. И, если честно, иногда мне кажется, что слов «счастье» даже немного мало, чтобы объяснить, насколько ты мне дорога.</p>
+      <p>В общем, Анеля, спасибо тебе за то, что ты есть в жизни. За наши разговоры, за смех, за всякие маленькие моменты, которые, может быть, ты даже не замечаешь.</p>
+      <p>Ты для меня очень особенный человек. Я рад, что могу назвать тебя своей лучшей подругой. И, если честно, иногда мне кажется, что слов «лучшая подруга» даже немного мало, чтобы объяснить, насколько ты мне дорога.</p>
       <p>Береги себя, ладно?<br>И не забывай, что ты мне очень важна. ♡</p>
       <div class="endnote">от парня, которому ты небезразлична</div>
       <a class="link" href="#top">начать сначала ↑</a>
     </div>
   </section>
 
-  <!-- Скрипт создания сердечек при скролле -->
+  <!-- Скрипты: квест и сердечки при скролле -->
   <script>
+    // Логика квеста при клике на любую фотку
+    function handleChoice() {
+      const grid = document.getElementById('questGrid');
+      const result = document.getElementById('questResult');
+      
+      // Прячем сетку с картинками и показываем душевное сообщение
+      grid.style.display = 'none';
+      result.classList.add('show');
+      
+      // Запускаем много сердечек для красоты
+      for (let i = 0; i < 12; i++) {
+        setTimeout(spawnScrollHeart, i * 150);
+      }
+    }
+
+    // Логика вылетающих сердечек при скролле
     const container = document.getElementById('hearts-container');
     const icons = ['♡', '✧', '♥', '🌸', '✨'];
     let lastScrollPos = window.scrollY;
@@ -260,7 +347,6 @@
     window.addEventListener('scroll', () => {
       const currentScrollPos = window.scrollY;
       
-      // Вызываем появление сердечка, когда прокрутка меняется на 25px и больше
       if (Math.abs(currentScrollPos - lastScrollPos) > 25) {
         spawnScrollHeart();
         lastScrollPos = currentScrollPos;
@@ -271,20 +357,16 @@
       const heart = document.createElement('div');
       heart.classList.add('floating-heart');
       
-      // Берем случайную иконку из массива
       heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
       
-      // Позиция: случайная ширина + низ текущей области экрана
       heart.style.left = (Math.random() * 90 + 5) + 'vw';
       heart.style.top = (window.innerHeight - 30) + 'px';
       
-      // Размеры и длительность анимации
       heart.style.fontSize = (Math.random() * 16 + 18) + 'px';
       heart.style.animationDuration = (Math.random() * 1.5 + 2.5) + 's';
 
       container.appendChild(heart);
 
-      // Удаляем из DOM после завершения анимации
       setTimeout(() => {
         heart.remove();
       }, 4000);
