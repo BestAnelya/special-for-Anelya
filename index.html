@@ -101,6 +101,7 @@
       border-radius: 999px;
       padding: 13px 25px;
       transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
     }
 
     .link:hover {
@@ -129,12 +130,12 @@
       margin-top: 28px;
     }
 
-    /* Сетка с фотографиями */
+    /* Сетка с фотографиями квеста */
     .quest-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      max-width: 440px;
+      max-width: 380px;
       margin: 20px auto;
     }
 
@@ -144,13 +145,13 @@
       border-radius: 16px;
       padding: 6px;
       cursor: pointer;
-      transition: transform 0.3s, border-color 0.3s, background 0.3s;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
     }
 
     .quest-card:hover {
       transform: scale(1.03);
       border-color: #ffb7d0;
-      background: rgba(255, 195, 216, 0.1);
     }
 
     .quest-card img {
@@ -285,7 +286,7 @@
         <p style="font-size: 16px; margin-bottom: 10px;">Здесь нет неправильных вариантов, потому что на каждой из них — самая прекрасная девушка в мире ♡</p>
       </div>
 
-      <!-- Главный факт: Таймер (всегда на виду) -->
+      <!-- Главный факт: Таймер -->
       <div class="fact-card">
         <div class="fact-badge">Интересный факт ✨</div>
         <p style="font-size: 16px; margin: 0 0 8px; color: #fff;">Мы общаемся уже:</p>
@@ -312,7 +313,8 @@
         <p style="font-size: 13px; color: #eaa4c0; margin: 10px 0 0;">(начиная с 10 декабря 2024 года)</p>
       </div>
 
-      <a class="link" href="#one">ну что, пойдём дальше? ↓</a>
+      <!-- Кнопка перехода к следующей секции вместо ломающей ссылку -->
+      <a class="link" onclick="goToNextSection()">ну что, пойдём дальше? ↓</a>
     </div>
   </section>
 
@@ -361,7 +363,7 @@
       
       <!-- Картинка воспоминания -->
       <div style="text-align: center; margin: 20px 0;">
-        <img src="IMG_0997.jpeg" alt="Наше воспоминание" style="max-width: 280px; width: 100%; height: auto; border-radius: 16px; border: 1px solid rgba(255, 195, 216, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
+        <img src="IMG_0997.jpeg" alt="Наше воспоминание" style="max-width: 260px; max-height: 260px; width: 100%; height: auto; object-fit: cover; border-radius: 16px; border: 1px solid rgba(255, 195, 216, 0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.3);">
       </div>
 
       <p><em>[Я помню нашу первую прогулку, когда мы гуляли зимой и забрели под мост, где смеялись и радовались вместе;)]</em></p>
@@ -396,7 +398,7 @@
 
   <!-- Скрипты -->
   <script>
-    // Квест при клике
+    // Квест при клике на картинку
     function handleChoice() {
       var grid = document.getElementById('questGrid');
       var result = document.getElementById('questResult');
@@ -406,6 +408,14 @@
       
       for (var i = 0; i < 10; i++) {
         setTimeout(spawnScrollHeart, i * 150);
+      }
+    }
+
+    // Плавный переход на следующую секцию (без резких прыжков)
+    function goToNextSection() {
+      var nextSection = document.getElementById('one');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
       }
     }
 
